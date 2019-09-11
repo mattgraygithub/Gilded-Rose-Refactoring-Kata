@@ -1,17 +1,48 @@
 package com.gildedrose;
 
+import org.approvaltests.combinations.CombinationApprovals;
 import org.junit.Test;
 
-import org.approvaltests.combinations.CombinationApprovals;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GildedRoseApprovalTest {
 
     @Test
     public void updateQuality() {
 
-        String[] names = new String[]{"foo", "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"};
-        Integer[] sellIns = new Integer[]{-10, -1, 0, 1, 3, 6, 11};
-        Integer[] qualities = new Integer[]{0, 1, 30, 49, 50};
+        List<String> namesList = new ArrayList<String>() {{
+            add("Aged Brie");
+            add("Backstage passes to a TAFKAL80ETC concert");
+            add("Sulfuras, Hand of Ragnaros");
+        }};
+
+        List<Integer> sellInsList = new ArrayList<>();
+        List<Integer> qualitiesList = new ArrayList<>();
+
+        StringBuilder name = new StringBuilder("Item");
+
+        int sellIn = 50;
+
+        for (int i = 0; i < 100; i++) {
+            name.append(i);
+            namesList.add(name.toString());
+
+            sellInsList.add(sellIn);
+            sellIn --;
+
+            qualitiesList.add(i);
+            name = new StringBuilder("Item");
+        }
+
+        String[] names = new String[namesList.size()];
+        names = namesList.toArray(names);
+
+        Integer[] sellIns = new Integer[sellInsList.size()];
+        sellIns = sellInsList.toArray(sellIns);
+
+        Integer[] qualities = new Integer[qualitiesList.size()];
+        qualities = qualitiesList.toArray(qualities);
 
         CombinationApprovals.verifyAllCombinations(
                 this::doUpdateQuality,
